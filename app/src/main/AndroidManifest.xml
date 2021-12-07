@@ -2,7 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ru.geekbrains.popular.libraries.imageswork">
 
+    <!-- Разрешение для выхода приложения в Интернет -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Разрешения на запись информации на диск телефона -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- Разрешения на запись информации на диск телефона -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <!-- This attribute is "false" by default on apps targeting Android Q. -->
+    <!-- Включена поддержка больших файлов (largeHeap) -->
     <application
+        android:requestLegacyExternalStorage="true"
+        android:largeHeap="true"
+
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

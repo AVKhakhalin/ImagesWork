@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="result_current_constraint_layout_city_name_margin_top">15dp</dimen>
+    <dimen name="result_current_constraint_layout_city_name_text_size">35sp</dimen>
+    <dimen name="result_current_constraint_layout_city_coordinates_margin_top">5dp</dimen>
+    <dimen name="result_current_constraint_layout_temperature_label_margin_top">15dp</dimen>
+    <dimen name="result_current_constraint_layout_temperature_value_margin_top">15dp</dimen>
+    <dimen name="result_current_constraint_layout_temperature_value_text_size">40sp</dimen>
+    <dimen name="result_current_constraint_layout_feelslike_label_margin_top">15dp</dimen>
+    <dimen name="result_current_constraint_layout_feelslike_value_margin_top">15dp</dimen>
+    <dimen name="result_current_constraint_layout_feelslike_value_text_size">30sp</dimen>
+    <dimen name="result_current_down_help_text_size">15sp</dimen>
+    <dimen name="result_current_down_help_margin_bottom">20dp</dimen>
+    <dimen name="fragment_result_weather_container_margin_top">55dp</dimen>
+</resources>
