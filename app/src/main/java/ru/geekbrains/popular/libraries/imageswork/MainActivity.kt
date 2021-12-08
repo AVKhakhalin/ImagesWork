@@ -1,6 +1,7 @@
 package ru.geekbrains.popular.libraries.imageswork
 
 import android.Manifest
+import android.R.attr
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,6 +13,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Environment.DIRECTORY_DOWNLOADS
 import android.os.ParcelFileDescriptor
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -85,6 +87,13 @@ class MainActivity: AppCompatActivity() {
                 resultCurrentFragment.getBinding()?.let {
                     it.imageViewBitmap.setImageBitmap(compressedBitmap)
                 }
+
+                // Сохранение png-файла
+                    val pngFile: String = "${selectedFile.toString().substring(0, selectedFile.toString().length - 3)}png"
+                    val pngPath: String = selectedFile.toString().substring(0, selectedFile.toString().lastIndexOf("/"))
+                    myBitmap?.let {
+                        bitmapToFile(it, "proba3.png")
+                    }
             }
 
 //            var path: String = selectedFile.toString().substring(0, selectedFile.toString().lastIndexOf("/"))
@@ -273,5 +282,46 @@ class MainActivity: AppCompatActivity() {
 
         // Finally, return the compressed bitmap
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+    }
+
+    fun bitmapToFile(bitmap: Bitmap, fileNameToSave: String): File? {
+        var file: File? = null
+        return try {
+            // Сохранение в корневом каталоге Internal storage
+//            file = File("${Environment.getExternalStorageDirectory().toString()}")
+            // /storage/emulated/0/Android/data/ru.geekbrains.popular.libraries.less_1_homework/files/storage/emulated/0/
+//            file = File("${getExternalFilesDir(Environment.getExternalStorageDirectory().toString())}")
+            // Сохранение в Internal storage в папке приложения:
+            // /storage/emulated/0/Android/data/ru.geekbrains.popular.libraries.less_1_homework/files/Pictures/
+//            file = File("${getExternalFilesDir(Environment.DIRECTORY_PICTURES)}")
+            // Сохранение в Internal storage в папке приложения:
+            // /storage/emulated/0/Android/data/ru.geekbrains.popular.libraries.less_1_homework/files/DCIM/
+            file = File("${getExternalFilesDir(Environment.DIRECTORY_DCIM)}")
+
+            // Сохранение в Internal storage:
+            // Создать директорию, если она ещё не создана
+            if (!file.exists()) {
+                file.mkdirs()
+            }
+
+            file = File(file, "${File.separator}$fileNameToSave")
+            Log.d("mylogs", "!!!!: $file")
+            file.createNewFile()
+
+            //Convert bitmap to byte array
+            val bos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos)
+            val bitmapdata = bos.toByteArray()
+
+            //write the bytes in file
+            val fos = FileOutputStream(file)
+            fos.write(bitmapdata)
+            fos.flush()
+            fos.close()
+            file
+        } catch (e: Exception) {
+            e.printStackTrace()
+            file // it will return null
+        }
     }
 }
