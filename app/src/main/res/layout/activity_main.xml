@@ -31,6 +31,7 @@
         android:layout_height="wrap_content"
         android:text="@string/button_save_to_png_text"
         android:textAllCaps="false"
+        android:visibility="invisible"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/button_save_to_png_margin_top"/>
 
