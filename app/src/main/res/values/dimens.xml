@@ -3,6 +3,7 @@
     <dimen name="button_load_initial_image_margin_top">30dp</dimen>
     <dimen name="initial_image_width">300dp</dimen>
     <dimen name="initial_image_height">300dp</dimen>
-    <dimen name="initial_image_margin_top">30dp</dimen>
-    <dimen name="button_save_to_png_margin_top">30dp</dimen>
+    <dimen name="initial_image_margin_top">20dp</dimen>
+    <dimen name="button_save_to_png_margin_top">20dp</dimen>
+    <dimen name="button_cancel_save_to_png_margin_top">20dp</dimen>
 </resources>

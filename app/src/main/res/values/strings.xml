@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">ImagesWork</string>
-    <string name="button_load_initial_image_text">Шаг №1: Выбрать картинку на телефоне</string>
-    <string name="button_save_to_png_text">Шаг №2: Сохранить картинку в формате png</string>
+    <string name="button_load_initial_image_text">Шаг №1: Выбрать jpg-картинку на телефоне</string>
+    <string name="button_save_to_png_text">Шаг №2: Сохранить jpg-картинку в png-файле</string>
+    <string name="button_cancel_save_to_png_text">Шаг №3: Отмена сохранения картинки</string>
 
 </resources>
