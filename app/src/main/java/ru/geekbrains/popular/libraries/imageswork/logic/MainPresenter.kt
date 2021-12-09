@@ -49,6 +49,7 @@ class MainPresenter(
 
     /** Сохранение загруженной картики в png-формат */
     fun saveImageToPNG() {
+        /** Сохранение картинки */
         logic.saveImageToPNGFile()
     }
 }
