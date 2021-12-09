@@ -32,7 +32,6 @@ class MainActivity: AppCompatActivity(), PresenterView {
         binding.buttonLoadInitialImage.setOnClickListener {
             binding.initialImage.visibility = View.INVISIBLE
             binding.buttonSaveToPng.visibility = View.INVISIBLE
-            binding.buttonCancelSaveToPng.visibility = View.INVISIBLE
             presenter.chooseImageOnPhone()
         }
 
@@ -42,6 +41,7 @@ class MainActivity: AppCompatActivity(), PresenterView {
         }
     }
 
+    /** Получение ссылки на jpg-картинку на телефоне */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -50,14 +50,14 @@ class MainActivity: AppCompatActivity(), PresenterView {
         }
     }
 
+    /** Отображение выбранной jpg картинки и кнопок с шагами 2 и 3 */
     override fun showImage(bitmap: Bitmap) {
-        /** Отображение выбранной jpg картинки и кнопок с шагами 2 и 3 */
         binding.initialImage.setImageBitmap(bitmap)
         binding.initialImage.visibility = View.VISIBLE
         binding.buttonSaveToPng.visibility = View.VISIBLE
-        binding.buttonCancelSaveToPng.visibility = View.VISIBLE
     }
 
+    /** Вывод сообщений */
     override fun showToastLogMessage(newText: String) {
         Toast.makeText(this, newText, Toast.LENGTH_LONG).show()
         Log.d(Constants.LOG_TAG, newText)

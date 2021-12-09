@@ -5,12 +5,17 @@ import android.content.Intent
 import android.graphics.Bitmap
 import androidx.core.app.ActivityCompat.startActivityForResult
 import ru.geekbrains.popular.libraries.imageswork.MainActivity
+import ru.geekbrains.popular.libraries.imageswork.logic.ui.CancelFileSaveDialogFragment
 
 class MainPresenter(
     private val presenterView: PresenterView
 ) {
     /** ЗАДАНИЕ ПЕРЕМЕННЫХ */ //region
+    // logic
     private val logic: Logic = Logic(this@MainPresenter)
+    // dialog fragment
+    private val cancelFileSaveDialogFragment: CancelFileSaveDialogFragment =
+        CancelFileSaveDialogFragment(this@MainPresenter)
     //endregion
 
     /** Метод выбора картинки на телефоне */
@@ -51,5 +56,21 @@ class MainPresenter(
     fun saveImageToPNG() {
         /** Сохранение картинки */
         logic.saveImageToPNGFile()
+    }
+
+    /** Отображение диалогового окна с отменой записи в файл */
+    fun showCancelFileSaveDialogFragment() {
+        cancelFileSaveDialogFragment.show((presenterView as MainActivity).supportFragmentManager, "")
+    }
+
+    /** Закрытие диалогового окна с отметной записи в файл и отмена записи в файл */
+    fun closeCancelFileSaveDialogFragmentAndCancelSave() {
+        logic.breakSaveImageToPNGFile()
+        cancelFileSaveDialogFragment.dismiss()
+    }
+
+    /** Закрытие диалогового окна с отметной записи в файл */
+    fun closeCancelFileSaveDialogFragment() {
+        cancelFileSaveDialogFragment.dismiss()
     }
 }

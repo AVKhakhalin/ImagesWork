@@ -11,11 +11,14 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.geekbrains.popular.libraries.imageswork.MainActivity
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class Logic(
     private val mainPresenter: MainPresenter
@@ -25,13 +28,14 @@ class Logic(
     private var bitmap: Bitmap? = null
     // message
     private var message: String = ""
+    // disposble
+    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
     //endregion
 
     /** Загрузка jpg-картинки */ //region
     fun loadingImage(selectedFile: Uri?) {
         loadingImageCompletable(selectedFile)
-            .doOnComplete {
-            }
+            .doOnComplete {}
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -50,7 +54,6 @@ class Logic(
                 .lowercase() == Constants.NAME_INPUT_FILE_EXTENTION)
         ) {
             /** Загрузка картинки */
-            Log.d("mylogs", "bitmap before: $bitmap")
             bitmap = getBitmapFromUri(selectedFile, mainPresenter.getContext())
             if (bitmap == null) {
                 message = "Загрузить jpg-файл не получилось"
@@ -85,20 +88,25 @@ class Logic(
         bitmap?.let {
             /** Получение разрешения на запись информации */
             isStoragePermissionGranted()
+            /** Отображение фрагмента для отмены записи файла */
+            mainPresenter.showCancelFileSaveDialogFragment()
             /** Сохранение картики */
-            saveImageToPNGFileCompletable()
-                .doOnComplete {
-                }
+            var disposable = saveImageToPNGFileCompletable()
+                .delaySubscription(Constants.DELAY_TIME, TimeUnit.MILLISECONDS)
+                .doOnComplete {}
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     mainPresenter.showMessage(message)
+                    mainPresenter.closeCancelFileSaveDialogFragment()
                 }, {
-                    Log.d("mylogs", "Ошибка сохранения png-файла: ${it.message}")
+                    mainPresenter.showMessage("Ошибка сохранения png-файла: ${it.message}")
+                    mainPresenter.closeCancelFileSaveDialogFragment()
                 })
+            compositeDisposable.add(disposable)
         }
     }
-    fun saveImageToPNGFileCompletable(): Completable = Completable.create {
+    fun saveImageToPNGFileCompletable(): Completable =  Completable.create {
             emitter ->
         if (bitmap == null) {
             message = "Не загружена картинка для сохранения в png-файл"
@@ -171,6 +179,12 @@ class Logic(
             message = "Ошибка при сохранении png-файла: ${e.message}"
             file
         }
+    }
+    /** Отмена сохранения картинки в png-файл */
+    fun breakSaveImageToPNGFile() {
+        compositeDisposable.dispose()
+        compositeDisposable.clear()
+        mainPresenter.showMessage("Отменено сохранение картинки в png-файл")
     }
     //region
 }

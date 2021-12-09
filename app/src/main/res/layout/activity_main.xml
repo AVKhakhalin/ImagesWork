@@ -6,7 +6,7 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_load_initial_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/initial_image_margin_top"/>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_save_to_png"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,14 +33,4 @@
         android:visibility="invisible"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/button_save_to_png_margin_top"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_cancel_save_to_png"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_cancel_save_to_png_text"
-        android:textAllCaps="false"
-        android:visibility="invisible"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/button_cancel_save_to_png_margin_top"/>
 </LinearLayout>
